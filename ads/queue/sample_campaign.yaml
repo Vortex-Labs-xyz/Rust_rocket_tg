@@ -1,0 +1,53 @@
+campaign_name: "Rust Rocket Trading Bot - Q1 2025"
+budget: 1000
+target_cpa: 50.00
+daily_budget: 100
+currency: "USD"
+
+targeting:
+  age_min: 18
+  age_max: 65
+  interests:
+    - "Cryptocurrency"
+    - "Trading"
+    - "Investment"
+    - "Financial Technology"
+  countries:
+    - "US"
+    - "CA"
+    - "GB"
+    - "DE"
+    - "AU"
+
+ad_groups:
+  - name: "Desktop Users"
+    device_types: ["desktop"]
+    bid_amount: 2.50
+    creatives:
+      - title: "Automated Crypto Trading"
+        description: "Join 10,000+ traders using Rust Rocket's AI-powered trading bot"
+        call_to_action: "Start Trading"
+        image_url: "https://www.rust-rocket.com/assets/ad-image-desktop.jpg"
+        
+  - name: "Mobile Users"
+    device_types: ["mobile", "tablet"]
+    bid_amount: 3.00
+    creatives:
+      - title: "Trade Crypto On-The-Go"
+        description: "Professional trading tools in your pocket. Start with $50!"
+        call_to_action: "Download App"
+        image_url: "https://www.rust-rocket.com/assets/ad-image-mobile.jpg"
+
+optimization:
+  goal: "conversions"
+  conversion_tracking: true
+  
+schedule:
+  start_date: "2025-01-01"
+  end_date: "2025-03-31"
+  time_zones: ["UTC", "EST", "PST"]
+
+performance_thresholds:
+  max_cac: 75.00
+  min_conversion_rate: 0.02
+  pause_if_exceeded: true 

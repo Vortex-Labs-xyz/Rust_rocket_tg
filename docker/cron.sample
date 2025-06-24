@@ -1,0 +1,29 @@
+# Rust Rocket TG Automation - Sample Cron Jobs
+# Copy this file to your crontab and adjust the schedules as needed
+
+# Post Scheduler - Check for new posts every 5 minutes
+*/5 * * * * cd /app && rrtg post-scheduler >> /var/log/rrtg-posts.log 2>&1
+
+# Story Uploader - Process stories every 10 minutes
+*/10 * * * * cd /app && rrtg story-uploader >> /var/log/rrtg-stories.log 2>&1
+
+# Moderation Guard - Monitor every 15 minutes
+*/15 * * * * cd /app && rrtg moderation-guard >> /var/log/rrtg-moderation.log 2>&1
+
+# Ads Manager - Process ad campaigns every hour
+0 * * * * cd /app && rrtg ads-manager >> /var/log/rrtg-ads.log 2>&1
+
+# Boost Manager - Apply boosts twice daily (8 AM and 8 PM)
+0 8,20 * * * cd /app && rrtg boost-manager --slots 1 >> /var/log/rrtg-boosts.log 2>&1
+
+# Leaderboard - Generate report daily at 9 AM
+0 9 * * * cd /app && rrtg leaderboard --limit 20 >> /var/log/rrtg-leaderboard.log 2>&1
+
+# Reminder System - Check for expiring boosts daily at 10 AM
+0 10 * * * cd /app && rrtg reminder --days 3 >> /var/log/rrtg-reminders.log 2>&1
+
+# Health Check - Test all commands weekly on Sunday at 1 AM
+0 1 * * 0 cd /app && rrtg --help && rrtg post-scheduler --dry-run && rrtg story-uploader --dry-run && rrtg moderation-guard --dry-run && rrtg ads-manager --dry-run >> /var/log/rrtg-health.log 2>&1
+
+# Log rotation (optional) - Clean old logs monthly
+0 0 1 * * find /var/log -name "rrtg-*.log" -mtime +30 -delete 

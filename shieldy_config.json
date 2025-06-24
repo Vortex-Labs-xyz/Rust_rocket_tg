@@ -1,0 +1,43 @@
+{
+  "captcha": {
+    "enabled": true,
+    "type": "simple",
+    "timeout": 60,
+    "strict": false
+  },
+  "deleteEntryMessages": true,
+  "greetings": {
+    "enabled": true,
+    "message": "🚀 Welcome to Rust Rocket! Please read our rules and enjoy trading discussions."
+  },
+  "deleteGreetingsTime": 5,
+  "restrictTime": 120,
+  "banNewTelegramUsers": false,
+  "deleteMessagesOnKick": true,
+  "banUsers": false,
+  "cas": {
+    "enabled": true,
+    "autoban": false
+  },
+  "underAttack": false,
+  "noChannelLinks": true,
+  "deleteLinks": false,
+  "allowInvitingBots": false,
+  "skipOldUsers": true,
+  "skipVerifiedUsers": true,
+  "trust": {
+    "enabled": true,
+    "threshold": 100
+  },
+  "language": "en",
+  "voting": {
+    "enabled": false
+  },
+  "customCaptchaMessage": "",
+  "timeGiven": 180,
+  "adminLocked": true,
+  "buttonText": "I'm not a robot 🤖",
+  "strict": false,
+  "noText": false,
+  "customWelcomeMessage": ""
+} 

@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "rustrocket-tg"
+version = "0.1.0"
+description = "Rust Rocket Telegram Channel Boost Automation"
+authors = ["Rust Rocket Team <info@rust-rocket.com>"]
+readme = "README.md"
+packages = [{include = "rustrocket_tg"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+telethon = ">=1.34"
+python-dotenv = ">=1.0"
+pydantic = ">=2"
+pydantic-settings = "*"
+typer = {extras = ["all"], version = ">=0.9"}
+rich = "*"
+sentry-sdk = "*"
+ffmpeg-python = "*"
+pyyaml = "*"
+pyperclip = ">=1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+ruff = "*"
+black = "*"
+
+[tool.poetry.scripts]
+rrtg = "rustrocket_tg.cli:app"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+select = ["E", "W", "F", "I", "N", "B", "UP"]
+ignore = ["E501", "B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"] 
