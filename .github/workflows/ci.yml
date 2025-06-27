@@ -22,12 +22,23 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Debug Python environment
+      run: |
+        python --version
+        python -c "import sys; print('Python executable:', sys.executable)"
+        python -c "import sys; print('Python path:', sys.path)"
+
     - name: Install Poetry
       uses: snok/install-poetry@v1
       with:
         version: 1.8.4
         virtualenvs-create: true
         virtualenvs-in-project: true
+
+    - name: Debug Poetry
+      run: |
+        poetry --version
+        poetry config --list
 
     - name: Load cached venv
       id: cached-poetry-dependencies
@@ -42,6 +53,11 @@ jobs:
 
     - name: Install package
       run: poetry install --no-interaction
+
+    - name: Debug installed packages
+      run: |
+        poetry show
+        ls -la rustrocket_x/
 
     - name: Run black
       run: poetry run black --check .
