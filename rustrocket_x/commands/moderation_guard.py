@@ -23,7 +23,7 @@ logger = get_logger(__name__)
 
 def load_shieldy_config(
     config_path: str = "shieldy_config.json",
-) -> Optional[dict[str, Any]]:
+) -> dict[str, Any] | None:
     """Load expected Shieldy configuration from JSON file."""
     try:
         config_file = Path(config_path)

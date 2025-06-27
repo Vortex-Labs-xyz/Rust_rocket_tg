@@ -22,12 +22,12 @@ class Settings(BaseSettings):
     channel: str = Field(..., alias="CHANNEL", description="Target channel/group")
 
     # Optional bot token for future features
-    tg_bot_token: Optional[str] = Field(
+    tg_bot_token: str | None = Field(
         None, alias="TG_BOT_TOKEN", description="Telegram Bot Token"
     )
 
     # Sentry configuration
-    sentry_dsn: Optional[str] = Field(
+    sentry_dsn: str | None = Field(
         None, alias="SENTRY_DSN", description="Sentry DSN for error tracking"
     )
 
@@ -39,12 +39,12 @@ class Settings(BaseSettings):
     )
 
     # Admin log chat ID
-    admin_log_chat: Optional[str] = Field(
+    admin_log_chat: str | None = Field(
         None, alias="ADMIN_LOG_CHAT", description="Chat ID for admin logging"
     )
 
     # Bot token for posting
-    bot_token: Optional[str] = Field(
+    bot_token: str | None = Field(
         None, alias="TG_BOT_TOKEN", description="Telegram bot token for posting"
     )
 

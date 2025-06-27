@@ -40,6 +40,6 @@ def setup_logging(settings: Settings, level: str = "INFO") -> logging.Logger:
     return logger
 
 
-def get_logger(name: Optional[str] = None) -> logging.Logger:
+def get_logger(name: str | None = None) -> logging.Logger:
     """Get logger instance."""
     return logging.getLogger(name or "rustrocket_x")
