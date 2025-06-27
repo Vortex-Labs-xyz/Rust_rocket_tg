@@ -18,6 +18,7 @@ sentry-sdk = "*"
 ffmpeg-python = "*"
 pyyaml = "*"
 pyperclip = ">=1"
+prometheus-client = "*"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"

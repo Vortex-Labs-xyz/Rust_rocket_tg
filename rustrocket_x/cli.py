@@ -13,9 +13,13 @@ from .commands.reminder import reminder_command
 from .commands.story_uploader import story_uploader_command
 from .config import get_settings
 from .utils.logger import get_logger, setup_logging
+from .metrics import init_metrics, RUNS, ERRORS, LATENCY
+
+# Initialize Prometheus metrics
+init_metrics()
 
 app = typer.Typer(
-    name="rrtg",
+    name="rrx",
     help="Rust Rocket Telegram Channel Boost Automation",
     rich_markup_mode="rich",
 )
@@ -31,46 +35,62 @@ def main(
     debug: bool = typer.Option(False, "--debug", help="Enable debug logging"),
 ) -> None:
     """Rust Rocket Telegram Channel Boost Automation CLI."""
-    try:
-        settings = get_settings()
-        log_level = "DEBUG" if debug else ("INFO" if verbose else "WARNING")
-        setup_logging(settings, level=log_level)
+    with LATENCY.time():
+        RUNS.inc()
+        try:
+            settings = get_settings()
+            log_level = "DEBUG" if debug else ("INFO" if verbose else "WARNING")
+            setup_logging(settings, level=log_level)
 
-        logger = get_logger()
-        logger.debug("CLI initialized with debug logging")
+            logger = get_logger()
+            logger.debug("CLI initialized with debug logging")
 
-    except Exception as e:
-        console.print(f"[red]❌ Configuration error: {e}[/red]")
-        console.print(
-            "[yellow]💡 Make sure your .env file is properly configured[/yellow]"
-        )
-        raise typer.Exit(1)
+        except Exception as e:
+            ERRORS.inc()
+            console.print(f"[red]❌ Configuration error: {e}[/red]")
+            console.print(
+                "[yellow]💡 Make sure your .env file is properly configured[/yellow]"
+            )
+            raise typer.Exit(1)
+
+
+# Register all commands with metrics tracking
+def track_command(command_func):
+    """Decorator to track command execution with Prometheus metrics."""
+    def wrapper(*args, **kwargs):
+        with LATENCY.time():
+            try:
+                return command_func(*args, **kwargs)
+            except Exception as e:
+                ERRORS.inc()
+                raise
+    return wrapper
 
 
 # Register all commands
 app.command("boost-manager", help="Apply boosts to the configured Telegram channel")(
-    boost_manager_command
+    track_command(boost_manager_command)
 )
 app.command("leaderboard", help="Show the top boosters leaderboard")(
-    leaderboard_command
+    track_command(leaderboard_command)
 )
 app.command("reminder", help="Send reminder messages for expiring boosts")(
-    reminder_command
+    track_command(reminder_command)
 )
 app.command(
     "post-scheduler", help="Process and publish scheduled posts from markdown files"
-)(post_scheduler_command)
+)(track_command(post_scheduler_command))
 app.command("story-uploader", help="Upload media files as Telegram stories")(
-    story_uploader_command
+    track_command(story_uploader_command)
 )
 app.command(
     "moderation-guard", help="Monitor and maintain channel/group moderation settings"
-)(moderation_guard_command)
+)(track_command(moderation_guard_command))
 app.command("ads-manager", help="Manage Telegram advertising campaigns")(
-    ads_manager_command
+    track_command(ads_manager_command)
 )
 app.command("create-admin-log", help="Create a private mega-group for admin logging")(
-    create_admin_log_command
+    track_command(create_admin_log_command)
 )
 
 
