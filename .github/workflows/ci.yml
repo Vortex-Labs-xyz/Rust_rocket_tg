@@ -22,23 +22,12 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Debug Python environment
-      run: |
-        python --version
-        python -c "import sys; print('Python executable:', sys.executable)"
-        python -c "import sys; print('Python path:', sys.path)"
-
     - name: Install Poetry
       uses: snok/install-poetry@v1
       with:
         version: 1.8.4
         virtualenvs-create: true
         virtualenvs-in-project: true
-
-    - name: Debug Poetry
-      run: |
-        poetry --version
-        poetry config --list
 
     - name: Load cached venv
       id: cached-poetry-dependencies
@@ -54,47 +43,11 @@ jobs:
     - name: Install package
       run: poetry install --no-interaction
 
-    - name: Debug installed packages
-      run: |
-        poetry show
-        ls -la rustrocket_x/
-
-    - name: Run black
+    - name: Run black formatter check
       run: poetry run black --check .
 
-    - name: Run ruff
+    - name: Run ruff linter check
       run: poetry run ruff check .
 
-    - name: Test 1 - Simple pytest run
-      run: poetry run pytest -v --tb=short
-      continue-on-error: true
-
-    - name: Test 2 - Test discovery only
-      run: poetry run pytest --collect-only
-      continue-on-error: true
-
-    - name: Test 3 - Single test file
-      run: poetry run pytest tests/test_cli.py -v
-      continue-on-error: true
-
-    - name: Test 4 - No coverage
-      run: poetry run pytest tests/ -v
-      continue-on-error: true
-
-    - name: Test 5 - Working directory check
-      run: |
-        pwd
-        ls -la
-        poetry run python -c "import os; print('CWD:', os.getcwd())"
-        poetry run pytest --version
-
-    - name: Test 6 - With coverage (original)
-      run: poetry run pytest --cov=rustrocket_x --cov-report=xml -v
-
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false 
+    - name: Run tests
+      run: poetry run pytest -v 
