@@ -1,11 +1,12 @@
-import os
 import asyncio
+import os
+
 from dotenv import load_dotenv
-from telethon import TelegramClient
-from telethon.tl import functions
 from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
+from telethon import TelegramClient
+from telethon.tl import functions
 
 load_dotenv()
 

@@ -15,8 +15,8 @@ from telethon.tl import functions, types
 from telethon.tl.types import ChatAdminRights
 
 from ..config import get_settings
-from ..utils.telegram import get_authenticated_client
 from ..utils.logger import get_logger
+from ..utils.telegram import get_authenticated_client
 
 console = Console()
 logger = get_logger(__name__)
@@ -136,10 +136,10 @@ async def create_admin_log_group_async(
                         )
                     )
 
-                    console.print(f"✅ Added bot as administrator")
+                    console.print("✅ Added bot as administrator")
                     logger.info(f"Added bot as administrator to group {full_chat_id}")
                 else:
-                    console.print(f"⚠️ Skipped adding bot as administrator")
+                    console.print("⚠️ Skipped adding bot as administrator")
 
                 progress.advance(task)
 

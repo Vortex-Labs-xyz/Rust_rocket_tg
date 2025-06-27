@@ -1,10 +1,12 @@
 """Tests for post scheduler functionality."""
 
-import pytest
 from pathlib import Path
+
+import pytest
+
 from rustrocket_tg.commands.post_scheduler import (
-    parse_markdown_file,
     create_inline_keyboard,
+    parse_markdown_file,
 )
 
 
@@ -16,7 +18,7 @@ buttons:
   - { text: "Start Bot", url: "https://t.me/RustRocketBot?start=request" }
 ---
 👋 Welcome to **Rust Rocket**!
-• 25 ms same-block snipes  
+• 25 ms same-block snipes
 • Copy-trade top wallets
 
 🎁 Start the bot & claim **10 RRC** bonus."""

@@ -8,12 +8,12 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from telethon import TelegramClient
-from telethon.tl import functions
 from telethon.errors import FloodWaitError
+from telethon.tl import functions
 
 from ..config import get_settings
-from ..utils.telegram import get_authenticated_client
 from ..utils.logger import get_logger
+from ..utils.telegram import get_authenticated_client
 
 console = Console()
 logger = get_logger(__name__)

@@ -3,7 +3,7 @@
 import asyncio
 import json
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any, Optional
 
 import typer
 from rich.console import Console
@@ -14,8 +14,8 @@ from telethon.tl import functions
 from telethon.tl.types import ChatAdminRights
 
 from ..config import get_settings
-from ..utils.telegram import get_authenticated_client
 from ..utils.logger import get_logger
+from ..utils.telegram import get_authenticated_client
 
 console = Console()
 logger = get_logger(__name__)
@@ -23,7 +23,7 @@ logger = get_logger(__name__)
 
 def load_shieldy_config(
     config_path: str = "shieldy_config.json",
-) -> Optional[Dict[str, Any]]:
+) -> Optional[dict[str, Any]]:
     """Load expected Shieldy configuration from JSON file."""
     try:
         config_file = Path(config_path)
@@ -38,7 +38,7 @@ def load_shieldy_config(
 
 
 async def check_shieldy_config_async(
-    client: TelegramClient, expected_config: Dict[str, Any], admin_id: int
+    client: TelegramClient, expected_config: dict[str, Any], admin_id: int
 ) -> bool:
     """Check if current Shieldy configuration matches expected configuration."""
     try:
@@ -100,7 +100,7 @@ async def check_welcome_pin_async(client: TelegramClient, channel_entity) -> boo
 
             # Check if welcome message exists
             has_welcome_pin = False
-            for msg in pinned_messages:
+            for _msg in pinned_messages:
                 # TODO: Add logic to identify welcome message
                 pass
 

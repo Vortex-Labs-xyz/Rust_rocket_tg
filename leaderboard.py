@@ -1,11 +1,12 @@
-import os
 import asyncio
+import os
+
 from dotenv import load_dotenv
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
 from telethon import TelegramClient
 from telethon.tl import functions
-from rich.console import Console
-from rich.table import Table
-from rich.panel import Panel
 
 load_dotenv()
 

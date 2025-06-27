@@ -1,6 +1,7 @@
 """Telethon client factory and utilities."""
 
 from telethon import TelegramClient
+
 from ..config import Settings
 
 

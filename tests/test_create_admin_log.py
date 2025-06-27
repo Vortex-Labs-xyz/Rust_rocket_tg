@@ -1,9 +1,10 @@
 """Tests for the create-admin-log command."""
 
 import json
-import pytest
 from pathlib import Path
-from unittest.mock import AsyncMock, MagicMock, patch, mock_open
+from unittest.mock import AsyncMock, MagicMock, mock_open, patch
+
+import pytest
 from typer.testing import CliRunner
 
 from rustrocket_tg.cli import app

@@ -4,24 +4,24 @@ import asyncio
 import os
 import shutil
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any
 
 import typer
 import yaml
 from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
-from telethon import TelegramClient, Button
+from telethon import Button, TelegramClient
 
 from ..config import get_settings
-from ..utils.telegram import get_authenticated_client
 from ..utils.logger import get_logger
+from ..utils.telegram import get_authenticated_client
 
 console = Console()
 logger = get_logger(__name__)
 
 
-def parse_markdown_file(file_path: Path) -> tuple[Dict[str, Any], str]:
+def parse_markdown_file(file_path: Path) -> tuple[dict[str, Any], str]:
     """Parse markdown file with YAML front-matter."""
     content = file_path.read_text(encoding="utf-8")
 
@@ -39,7 +39,7 @@ def parse_markdown_file(file_path: Path) -> tuple[Dict[str, Any], str]:
     return {}, content.strip()
 
 
-def create_inline_keyboard(buttons: List[Dict[str, str]]):
+def create_inline_keyboard(buttons: list[dict[str, str]]):
     """Create inline keyboard from button configuration for Telethon."""
     if not buttons:
         return None
@@ -154,7 +154,7 @@ async def process_post_files_async(
                     if front_matter.get("pin", False):
                         # TODO: Unpin previous pinned message first
                         await client.pin_message(channel_entity, message)
-                        console.print(f"✔ Pinned")
+                        console.print("✔ Pinned")
                         console.print(f"  Chat ID: {message.chat_id}")
                         logger.info(
                             f"Pinned message {message.id} from {file_path.name}"

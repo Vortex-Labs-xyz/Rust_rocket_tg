@@ -4,7 +4,7 @@ import asyncio
 import json
 import shutil
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 import typer
 import yaml
@@ -13,14 +13,14 @@ from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
 from ..config import get_settings
-from ..utils.telegram import get_authenticated_client
 from ..utils.logger import get_logger
+from ..utils.telegram import get_authenticated_client
 
 console = Console()
 logger = get_logger(__name__)
 
 
-def render_trade_event_video(json_data: Dict[str, Any], output_path: Path) -> bool:
+def render_trade_event_video(json_data: dict[str, Any], output_path: Path) -> bool:
     """Render trade event data to a 15-second MP4 video."""
     try:
         # TODO: Implement actual video rendering using ffmpeg-python

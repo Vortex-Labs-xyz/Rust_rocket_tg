@@ -3,7 +3,7 @@
 import asyncio
 import shutil
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any
 
 import typer
 import yaml
@@ -18,7 +18,7 @@ console = Console()
 logger = get_logger(__name__)
 
 
-def load_ad_config(file_path: Path) -> Dict[str, Any]:
+def load_ad_config(file_path: Path) -> dict[str, Any]:
     """Load advertisement configuration from YAML file."""
     try:
         return yaml.safe_load(file_path.read_text(encoding="utf-8"))
@@ -30,7 +30,7 @@ def load_ad_config(file_path: Path) -> Dict[str, Any]:
         raise
 
 
-async def create_or_update_campaign_async(ad_config: Dict[str, Any]) -> bool:
+async def create_or_update_campaign_async(ad_config: dict[str, Any]) -> bool:
     """Create or update a Telegram advertising campaign."""
     try:
         # TODO: Implement actual Telegram Ads API integration
@@ -60,7 +60,7 @@ async def create_or_update_campaign_async(ad_config: Dict[str, Any]) -> bool:
         return False
 
 
-async def check_and_pause_campaigns_async(ad_config: Dict[str, Any]) -> bool:
+async def check_and_pause_campaigns_async(ad_config: dict[str, Any]) -> bool:
     """Check campaign performance and pause if CAC exceeds target."""
     try:
         # TODO: Implement actual performance monitoring
