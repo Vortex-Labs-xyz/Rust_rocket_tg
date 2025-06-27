@@ -11,11 +11,11 @@ from .create_admin_log import create_admin_log_command
 
 __all__ = [
     "boost_manager_command",
-    "leaderboard_command", 
+    "leaderboard_command",
     "reminder_command",
     "post_scheduler_command",
     "story_uploader_command",
     "moderation_guard_command",
     "ads_manager_command",
     "create_admin_log_command",
-] 
+]

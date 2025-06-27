@@ -1,1 +1,1 @@
-"""Tests for Rust Rocket TG automation.""" 
+"""Tests for Rust Rocket TG automation."""

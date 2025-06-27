@@ -62,15 +62,18 @@ def test_debug_flag():
     assert result.exit_code == 0
 
 
-@pytest.mark.parametrize("command", [
-    "boost-manager", 
-    "leaderboard", 
-    "reminder", 
-    "post-scheduler", 
-    "story-uploader", 
-    "moderation-guard", 
-    "ads-manager"
-])
+@pytest.mark.parametrize(
+    "command",
+    [
+        "boost-manager",
+        "leaderboard",
+        "reminder",
+        "post-scheduler",
+        "story-uploader",
+        "moderation-guard",
+        "ads-manager",
+    ],
+)
 def test_all_commands_have_dry_run(command):
     """Test that all commands support dry-run mode."""
     result = runner.invoke(app, [command, "--help"])
@@ -146,14 +149,18 @@ def test_ads_manager_help():
 
 def test_post_scheduler_dry_run():
     """Test post-scheduler command in dry-run mode."""
-    result = runner.invoke(app, ["post-scheduler", "--queue-dir", "content/queue", "--dry-run"])
+    result = runner.invoke(
+        app, ["post-scheduler", "--queue-dir", "content/queue", "--dry-run"]
+    )
     assert result.exit_code == 0
     assert "DRY RUN" in result.stdout or "No markdown files found" in result.stdout
 
 
 def test_story_uploader_dry_run():
     """Test story-uploader command in dry-run mode."""
-    result = runner.invoke(app, ["story-uploader", "--queue-dir", "story/queue", "--dry-run"])
+    result = runner.invoke(
+        app, ["story-uploader", "--queue-dir", "story/queue", "--dry-run"]
+    )
     assert result.exit_code == 0
     assert "DRY RUN" in result.stdout or "No media files found" in result.stdout
 
@@ -167,9 +174,14 @@ def test_moderation_guard_dry_run():
 
 def test_ads_manager_dry_run():
     """Test ads-manager command in dry-run mode."""
-    result = runner.invoke(app, ["ads-manager", "--queue-dir", "ads/queue", "--dry-run"])
+    result = runner.invoke(
+        app, ["ads-manager", "--queue-dir", "ads/queue", "--dry-run"]
+    )
     assert result.exit_code == 0
-    assert "DRY RUN" in result.stdout or "No YAML ad configuration files found" in result.stdout
+    assert (
+        "DRY RUN" in result.stdout
+        or "No YAML ad configuration files found" in result.stdout
+    )
 
 
 def test_create_admin_log_help():
@@ -178,4 +190,4 @@ def test_create_admin_log_help():
     assert result.exit_code == 0
     assert "Create a private mega-group for admin logging" in result.stdout
     assert "--name" in result.stdout
-    assert "--write-env" in result.stdout 
+    assert "--write-env" in result.stdout
