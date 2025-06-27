@@ -28,6 +28,11 @@ jobs:
     - name: Install dependencies
       run: poetry install --no-interaction
 
+    - name: System deps
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg libmagic1 libwebp-dev
+
     - name: Code formatting check
       run: poetry run black --check .
 
@@ -42,6 +47,9 @@ jobs:
     - name: Import verification
       run: |
         poetry run python -c "import rustrocket_x; print('✅ Package imports successfully')"
+
+    - name: Run tests
+      run: poetry run pytest -q --tb=short
 
   # NOTE: Tests pass locally (37/37) but fail in CI environment
   # This appears to be a CI-specific environment issue
