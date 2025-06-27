@@ -49,5 +49,22 @@ jobs:
     - name: Run ruff linter check
       run: poetry run ruff check .
 
-    - name: Run tests
-      run: poetry run pytest -v 
+    - name: EXTREME DEBUG - Environment
+      run: |
+        echo "=== WORKING DIRECTORY ==="
+        pwd
+        ls -la
+        echo "=== PYTHON PATH ==="
+        poetry run python -c "import sys; print('\n'.join(sys.path))"
+        echo "=== RUSTROCKET_X IMPORT ==="
+        poetry run python -c "import rustrocket_x; print('SUCCESS')" || echo "IMPORT FAILED"
+        echo "=== PYTEST DISCOVERY ==="
+        poetry run pytest --collect-only | head -20
+        echo "=== FILE STRUCTURE ==="
+        find rustrocket_x -name "*.py" | head -10
+
+    - name: SIMPLE TEST - One file only
+      run: poetry run pytest tests/test_cli.py::test_main_help -v -s
+
+    - name: Run all tests with maximum debugging
+      run: poetry run pytest -v -s --tb=long 
