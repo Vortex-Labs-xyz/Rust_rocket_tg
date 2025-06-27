@@ -23,7 +23,7 @@ def setup_logging(settings: Settings, level: str = "INFO") -> logging.Logger:
         )
 
     # Create logger
-    logger = logging.getLogger("rustrocket_tg")
+    logger = logging.getLogger("rustrocket_x")
     logger.setLevel(getattr(logging, level.upper()))
 
     # Remove existing handlers
@@ -42,4 +42,4 @@ def setup_logging(settings: Settings, level: str = "INFO") -> logging.Logger:
 
 def get_logger(name: Optional[str] = None) -> logging.Logger:
     """Get logger instance."""
-    return logging.getLogger(name or "rustrocket_tg")
+    return logging.getLogger(name or "rustrocket_x")

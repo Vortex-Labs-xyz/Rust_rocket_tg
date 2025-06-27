@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from rustrocket_tg.commands.post_scheduler import (
+from rustrocket_x.commands.post_scheduler import (
     create_inline_keyboard,
     parse_markdown_file,
 )

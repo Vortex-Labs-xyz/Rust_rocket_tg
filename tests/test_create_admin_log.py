@@ -7,7 +7,7 @@ from unittest.mock import AsyncMock, MagicMock, mock_open, patch
 import pytest
 from typer.testing import CliRunner
 
-from rustrocket_tg.cli import app
+from rustrocket_x.cli import app
 
 runner = CliRunner()
 
@@ -47,9 +47,9 @@ class TestCreateAdminLogCommand:
         assert "--name" in result.stdout
         assert "--write-env" in result.stdout
 
-    @patch("rustrocket_tg.commands.create_admin_log.get_settings")
-    @patch("rustrocket_tg.commands.create_admin_log.get_authenticated_client")
-    @patch("rustrocket_tg.commands.create_admin_log.pyperclip")
+    @patch("rustrocket_x.commands.create_admin_log.get_settings")
+    @patch("rustrocket_x.commands.create_admin_log.get_authenticated_client")
+    @patch("rustrocket_x.commands.create_admin_log.pyperclip")
     def test_create_admin_log_without_bot_token(
         self, mock_pyperclip, mock_client, mock_settings_func
     ):
@@ -66,9 +66,9 @@ class TestCreateAdminLogCommand:
         assert result.exit_code == 1
         assert "TG_BOT_TOKEN is required" in result.stdout
 
-    @patch("rustrocket_tg.commands.create_admin_log.get_settings")
-    @patch("rustrocket_tg.commands.create_admin_log.get_authenticated_client")
-    @patch("rustrocket_tg.commands.create_admin_log.pyperclip")
+    @patch("rustrocket_x.commands.create_admin_log.get_settings")
+    @patch("rustrocket_x.commands.create_admin_log.get_authenticated_client")
+    @patch("rustrocket_x.commands.create_admin_log.pyperclip")
     @patch("pathlib.Path.mkdir")
     @patch("pathlib.Path.write_text")
     def test_create_admin_log_success_without_bot(
@@ -109,9 +109,9 @@ class TestCreateAdminLogCommand:
         mock_write_text.assert_called()
         mock_pyperclip.copy.assert_called_with("-1001234567890")
 
-    @patch("rustrocket_tg.commands.create_admin_log.get_settings")
-    @patch("rustrocket_tg.commands.create_admin_log.get_authenticated_client")
-    @patch("rustrocket_tg.commands.create_admin_log.pyperclip")
+    @patch("rustrocket_x.commands.create_admin_log.get_settings")
+    @patch("rustrocket_x.commands.create_admin_log.get_authenticated_client")
+    @patch("rustrocket_x.commands.create_admin_log.pyperclip")
     @patch("pathlib.Path.mkdir")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.read_text")
@@ -164,9 +164,9 @@ class TestCreateAdminLogCommand:
         assert env_write_call is not None
         assert "ADMIN_LOG_CHAT=-1001234567890" in str(env_write_call)
 
-    @patch("rustrocket_tg.commands.create_admin_log.get_settings")
-    @patch("rustrocket_tg.commands.create_admin_log.get_authenticated_client")
-    @patch("rustrocket_tg.commands.create_admin_log.pyperclip")
+    @patch("rustrocket_x.commands.create_admin_log.get_settings")
+    @patch("rustrocket_x.commands.create_admin_log.get_authenticated_client")
+    @patch("rustrocket_x.commands.create_admin_log.pyperclip")
     @patch("pathlib.Path.mkdir")
     @patch("pathlib.Path.write_text")
     def test_create_admin_log_with_bot_success(
@@ -203,8 +203,8 @@ class TestCreateAdminLogCommand:
         mock_client.assert_called()  # CreateChannelRequest called
         assert mock_client.call_count >= 3  # CreateChannel, InviteToChannel, EditAdmin
 
-    @patch("rustrocket_tg.commands.create_admin_log.get_settings")
-    @patch("rustrocket_tg.commands.create_admin_log.get_authenticated_client")
+    @patch("rustrocket_x.commands.create_admin_log.get_settings")
+    @patch("rustrocket_x.commands.create_admin_log.get_authenticated_client")
     def test_create_admin_log_telethon_error(
         self, mock_client_func, mock_settings_func, mock_settings
     ):
@@ -227,9 +227,9 @@ class TestCreateAdminLogCommand:
             result.exit_code == 2
         )  # Typer returns exit code 2 for missing required options
 
-    @patch("rustrocket_tg.commands.create_admin_log.get_settings")
-    @patch("rustrocket_tg.commands.create_admin_log.get_authenticated_client")
-    @patch("rustrocket_tg.commands.create_admin_log.pyperclip")
+    @patch("rustrocket_x.commands.create_admin_log.get_settings")
+    @patch("rustrocket_x.commands.create_admin_log.get_authenticated_client")
+    @patch("rustrocket_x.commands.create_admin_log.pyperclip")
     @patch("pathlib.Path.mkdir")
     @patch("pathlib.Path.write_text")
     @patch("pathlib.Path.exists")

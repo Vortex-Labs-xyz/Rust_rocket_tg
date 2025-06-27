@@ -3,7 +3,7 @@
 import pytest
 from typer.testing import CliRunner
 
-from rustrocket_tg.cli import app
+from rustrocket_x.cli import app
 
 runner = CliRunner()
 
