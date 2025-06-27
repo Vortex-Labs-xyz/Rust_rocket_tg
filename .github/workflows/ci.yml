@@ -65,14 +65,30 @@ jobs:
     - name: Run ruff
       run: poetry run ruff check .
 
-    - name: Pre-test debugging
-      run: |
-        poetry run python -c "import rustrocket_x; print('Package import: OK')"
-        poetry run python -c "import pytest; print('Pytest version:', pytest.__version__)"
-        poetry run python -c "import sys; print('Sys.path in venv:', sys.path)"
-        find . -name "*.py" -path "./rustrocket_x/*" | head -5
+    - name: Test 1 - Simple pytest run
+      run: poetry run pytest -v --tb=short
+      continue-on-error: true
 
-    - name: Run tests
+    - name: Test 2 - Test discovery only
+      run: poetry run pytest --collect-only
+      continue-on-error: true
+
+    - name: Test 3 - Single test file
+      run: poetry run pytest tests/test_cli.py -v
+      continue-on-error: true
+
+    - name: Test 4 - No coverage
+      run: poetry run pytest tests/ -v
+      continue-on-error: true
+
+    - name: Test 5 - Working directory check
+      run: |
+        pwd
+        ls -la
+        poetry run python -c "import os; print('CWD:', os.getcwd())"
+        poetry run pytest --version
+
+    - name: Test 6 - With coverage (original)
       run: poetry run pytest --cov=rustrocket_x --cov-report=xml -v
 
     - name: Upload coverage to Codecov
