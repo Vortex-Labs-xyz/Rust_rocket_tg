@@ -24,14 +24,14 @@ COPY pyproject.toml ./
 # Configure Poetry
 RUN poetry config virtualenvs.create false
 
-# Install dependencies
-RUN poetry install --no-dev
+# Install dependencies only (without installing the project itself)
+RUN poetry install --without dev --no-root
 
 # Copy application code
 COPY . .
 
-# Install the package
-RUN poetry install --no-dev
+# Now install the package
+RUN poetry install --only-root
 
 # Create directories for automation queues
 RUN mkdir -p \
