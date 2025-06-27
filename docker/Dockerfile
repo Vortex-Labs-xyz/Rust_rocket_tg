@@ -1,10 +1,7 @@
 FROM python:3.12-slim
 
 # Set environment variables
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PIP_NO_CACHE_DIR=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -12,38 +9,26 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Poetry
-RUN pip install poetry
-
 # Set work directory
 WORKDIR /app
 
-# Copy dependency files
+# Copy and install requirements
 COPY pyproject.toml ./
-
-# Configure Poetry
-RUN poetry config virtualenvs.create false
-
-# Install dependencies only (without installing the project itself)
-RUN poetry install --without dev --no-root
+RUN pip install poetry && \
+    poetry config virtualenvs.create false && \
+    poetry install --without dev --no-root
 
 # Copy application code
 COPY . .
 
-# Now install the package
+# Install the package
 RUN poetry install --only-root
 
-# Create directories for automation queues
-RUN mkdir -p \
-    content/queue \
-    content/done \
-    story/queue \
-    story/done \
-    ads/queue \
-    ads/done
+# Create directories
+RUN mkdir -p content/queue content/done story/queue story/done ads/queue ads/done
 
-# Sicherheit: non-root
-RUN addgroup --system app && adduser --system --ingroup app app
+# Create non-root user
+RUN adduser --system --group app
 RUN chown -R app:app /app
 USER app
 
@@ -51,5 +36,4 @@ USER app
 ENTRYPOINT ["rrtg"]
 CMD ["--help"]
 
-# Expose port for Prometheus exporter
 EXPOSE 9100 
