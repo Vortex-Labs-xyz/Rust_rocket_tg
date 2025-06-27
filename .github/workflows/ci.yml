@@ -65,6 +65,13 @@ jobs:
     - name: Run ruff
       run: poetry run ruff check .
 
+    - name: Pre-test debugging
+      run: |
+        poetry run python -c "import rustrocket_x; print('Package import: OK')"
+        poetry run python -c "import pytest; print('Pytest version:', pytest.__version__)"
+        poetry run python -c "import sys; print('Sys.path in venv:', sys.path)"
+        find . -name "*.py" -path "./rustrocket_x/*" | head -5
+
     - name: Run tests
       run: poetry run pytest --cov=rustrocket_x --cov-report=xml -v
 
