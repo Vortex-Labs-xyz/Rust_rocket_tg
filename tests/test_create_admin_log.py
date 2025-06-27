@@ -107,7 +107,7 @@ class TestCreateAdminLogCommand:
         # Verify file operations
         mock_mkdir.assert_called()
         mock_write_text.assert_called()
-        mock_pyperclip.copy.assert_called_with("-1001001234567890")
+        mock_pyperclip.copy.assert_called_with("-1001234567890")
 
     @patch("rustrocket_tg.commands.create_admin_log.get_settings")
     @patch("rustrocket_tg.commands.create_admin_log.get_authenticated_client")
@@ -162,7 +162,7 @@ class TestCreateAdminLogCommand:
                 break
 
         assert env_write_call is not None
-        assert "ADMIN_LOG_CHAT=-1001001234567890" in str(env_write_call)
+        assert "ADMIN_LOG_CHAT=-1001234567890" in str(env_write_call)
 
     @patch("rustrocket_tg.commands.create_admin_log.get_settings")
     @patch("rustrocket_tg.commands.create_admin_log.get_authenticated_client")
