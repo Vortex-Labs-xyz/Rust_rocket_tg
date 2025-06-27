@@ -12,8 +12,8 @@ from .commands.post_scheduler import post_scheduler_command
 from .commands.reminder import reminder_command
 from .commands.story_uploader import story_uploader_command
 from .config import get_settings
+from .metrics import ERRORS, LATENCY, RUNS, init_metrics
 from .utils.logger import get_logger, setup_logging
-from .metrics import init_metrics, RUNS, ERRORS, LATENCY
 
 # Initialize Prometheus metrics
 init_metrics()
@@ -57,6 +57,7 @@ def main(
 # Register all commands with metrics tracking
 def track_command(command_func):
     """Decorator to track command execution with Prometheus metrics."""
+
     def wrapper(*args, **kwargs):
         with LATENCY.time():
             try:
@@ -64,6 +65,7 @@ def track_command(command_func):
             except Exception as e:
                 ERRORS.inc()
                 raise
+
     return wrapper
 
 
