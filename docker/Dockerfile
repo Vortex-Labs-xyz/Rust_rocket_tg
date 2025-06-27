@@ -42,11 +42,14 @@ RUN mkdir -p \
     ads/queue \
     ads/done
 
-# Create non-root user
-RUN useradd --create-home --shell /bin/bash app
+# Sicherheit: non-root
+RUN addgroup --system app && adduser --system --ingroup app app
 RUN chown -R app:app /app
 USER app
 
 # Set entrypoint
 ENTRYPOINT ["rrtg"]
-CMD ["--help"] 
+CMD ["--help"]
+
+# Expose port for Prometheus exporter
+EXPOSE 9100 
