@@ -21,6 +21,7 @@ pyperclip = ">=1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"
+pytest-cov = "*"
 ruff = "*"
 black = "*"
 

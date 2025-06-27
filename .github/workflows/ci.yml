@@ -50,7 +50,7 @@ jobs:
       run: poetry run ruff check .
 
     - name: Run tests
-      run: poetry run pytest -v --tb=short
+      run: poetry run pytest --cov=rustrocket_x --cov-report=xml -v
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
