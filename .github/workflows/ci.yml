@@ -10,70 +10,31 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.12"]
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.12
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: "3.12"
 
     - name: Install Poetry
       uses: snok/install-poetry@v1
       with:
         version: 1.8.4
-        virtualenvs-create: true
-        virtualenvs-in-project: true
-
-    - name: Load cached venv
-      id: cached-poetry-dependencies
-      uses: actions/cache@v4
-      with:
-        path: .venv
-        key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
     - name: Install dependencies
-      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-      run: poetry install --no-interaction --no-root
-
-    - name: Install package
       run: poetry install --no-interaction
 
-    - name: Run black formatter check
-      run: poetry run black --check .
-
-    - name: Run ruff linter check
-      run: poetry run ruff check .
-
-    - name: Run CLI tests
-      run: poetry run pytest tests/test_cli.py -v --tb=short
-
-    - name: Run admin log tests  
-      run: poetry run pytest tests/test_create_admin_log.py -v --tb=short
-
-    - name: Run post scheduler tests
-      run: poetry run pytest tests/test_post_scheduler.py -v --tb=short
-
-    - name: EXTREME DEBUG - Environment
+    - name: Code quality checks
       run: |
-        echo "=== WORKING DIRECTORY ==="
-        pwd
-        ls -la
-        echo "=== PYTHON PATH ==="
-        poetry run python -c "import sys; print('\n'.join(sys.path))"
-        echo "=== RUSTROCKET_X IMPORT ==="
-        poetry run python -c "import rustrocket_x; print('SUCCESS')" || echo "IMPORT FAILED"
-        echo "=== PYTEST DISCOVERY ==="
-        poetry run pytest --collect-only | head -20
-        echo "=== FILE STRUCTURE ==="
-        find rustrocket_x -name "*.py" | head -10
+        poetry run black --check .
+        poetry run ruff check .
 
-    - name: SIMPLE TEST - One file only
-      run: poetry run pytest tests/test_cli.py::test_main_help -v -s
+    - name: Test single function  
+      run: poetry run pytest tests/test_cli.py::test_main_help -v
 
-    - name: Run all tests with maximum debugging
-      run: poetry run pytest -v -s --tb=long 
+    - name: All tests (if single works)
+      run: poetry run pytest -x -v
+      if: success() 
