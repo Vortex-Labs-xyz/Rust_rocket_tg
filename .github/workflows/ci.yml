@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.13"]
+        python-version: ["3.12"]
 
     steps:
     - uses: actions/checkout@v4
@@ -50,7 +50,7 @@ jobs:
       run: poetry run ruff check .
 
     - name: Run tests
-      run: poetry run pytest --cov=rustrocket_x --cov-report=xml
+      run: poetry run pytest -v --tb=short
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4
