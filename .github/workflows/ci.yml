@@ -49,6 +49,15 @@ jobs:
     - name: Run ruff linter check
       run: poetry run ruff check .
 
+    - name: Run CLI tests
+      run: poetry run pytest tests/test_cli.py -v --tb=short
+
+    - name: Run admin log tests  
+      run: poetry run pytest tests/test_create_admin_log.py -v --tb=short
+
+    - name: Run post scheduler tests
+      run: poetry run pytest tests/test_post_scheduler.py -v --tb=short
+
     - name: EXTREME DEBUG - Environment
       run: |
         echo "=== WORKING DIRECTORY ==="
